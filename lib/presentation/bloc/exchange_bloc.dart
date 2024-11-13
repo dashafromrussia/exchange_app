@@ -6,7 +6,7 @@ import 'dart:async';
 import 'package:untitled4/presentation/bloc/exchange_event.dart';
 import 'package:untitled4/presentation/bloc/exchange_state.dart';
 import 'package:untitled4/presentation/model/exchange_model.dart';
-
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 class ExchangeBloc extends Bloc<ExchangeEvent,ExchangeState>{
 
@@ -20,7 +20,7 @@ ExchangeBloc(this._apiExchangeRepository,this._internetConnection) : super(const
     on<ExchangeEvent>((event,emit)async{
       if(event is GetAllDataExchangeEvent){
         if(_streamSubscription!=null){
-      /*_streamSubscription =_internetConnection.isConnection.listen((InternetStatus event)async{
+      _streamSubscription =_internetConnection.isConnection.listen((InternetStatus event)async{
         if(event == InternetStatus.connected){
          try{
            _rates = await _apiExchangeRepository.getExchangeRateData();
@@ -38,7 +38,7 @@ ExchangeBloc(this._apiExchangeRepository,this._internetConnection) : super(const
            emit(ErrorDataExchangeState());
          }
         }
-      });*/
+      });
     }
         try{
           _rates = await _apiExchangeRepository.getExchangeRateData();
@@ -48,7 +48,6 @@ ExchangeBloc(this._apiExchangeRepository,this._internetConnection) : super(const
         }catch(e){
           emit(ErrorDataExchangeState());
         }
-       _rates = await _apiExchangeRepository.getExchangeRateData();
       }else if(event is ConvertFirstValueExchangeEvent){
         if(event.value==null){
           _model = _model?.copyWith(firstValue: null,secondValue: null);

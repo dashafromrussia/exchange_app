@@ -6,7 +6,7 @@ class InternetConnectionService{
   final InternetConnection _connectivity;
   InternetConnectionService(this._connectivity);
 
-  Stream<InternetStatus> get isConnection => InternetConnection().onStatusChange;
-  InternetConnection get internetConnection=> InternetConnection();
+  Stream<InternetStatus> get isConnection => _connectivity.onStatusChange;
+  InternetConnection get internetConnection=> _connectivity;
 
 }
